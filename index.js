@@ -57,9 +57,10 @@ app.get('/api/pokemon/:id', (req,res) =>{
 
 app.get('/api/type/:type', (req,res) =>{
   const type = req.params.type.toLowerCase()
-  if(type){
+  if(type && isNaN(type)){
     var tp = pokedex.filter(pokedex => pokedex.type == type )
-if(tp == undefined){
+    console.log(tp) 
+if(tp.length == 0){
 res.send("Erreur")
  } else {
   res.send(tp);
