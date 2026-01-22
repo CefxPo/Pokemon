@@ -1,7 +1,9 @@
+//pour lancer l'appli-code obligatoire
 const express = require('express')
 const app = express()
 const port = 3000
 
+//tableau pokedex avec une id, un nom, un type et un level
 const pokedex = [
     {id: 1, name :"Bulbizarre", type:"plante", level:5},
     {id: 4, name :"Salamèche", type:"feu", level:5},
@@ -12,15 +14,9 @@ const pokedex = [
     {id: 133, name :"Evoli", type:"normal", level:10},
 ]
 
-//app.get('/:prenom/:nom', (req,res) => {
-//  res.send(`Boujour ${req.params.nom} ${req.params.prenom} `)
-//})
-
-//app.get('/:prenom/', (req,res) => {
- // res.send(`Boujour ${req.params.prenom}`)
-//})
 
 
+//quand l'appli lancer à dans la barre de navigation /api/pokemon?limit= ...
 app.get('/api/pokemon', (req,res) =>{
   req.query.limit 
   //Si ma limite existe
@@ -34,13 +30,49 @@ app.get('/api/pokemon', (req,res) =>{
   else{
     res.send('ERREUR')
   }
-  //si il n'y a pas de limit, on affiche tout
-} 
-else{
+}
+   //si il n'y a pas de limit, on affiche tout
+else {
     res.send(pokedex)
   }
   
 })
+
+
+//quand l'appli lancer à dans la barre de navigation /api/pokemon/ un nombre ...
+app.get('/api/pokemon/:id', (req,res) =>{
+ const id = req.params.id
+ if(id>0){
+  var idp = pokedex.find(pokedex => pokedex.id == id)
+  if(idp == undefined){
+    res.send("Erreur")
+  } else {
+    res.send(idp);
+  }
+ }else {
+  res.send("Erreur")
+ }
+})
+
+
+app.get('/api/type/:type', (req,res) =>{
+  const type = req.params.type.toLowerCase()
+  if(type){
+    var tp = pokedex.filter(pokedex => pokedex.type == type )
+if(tp == undefined){
+res.send("Erreur")
+ } else {
+  res.send(tp);
+ }
+}else{
+  res.send("Erreur")
+}
+})
+
+
+
+
+
 
 
 
